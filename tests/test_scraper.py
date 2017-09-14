@@ -97,3 +97,9 @@ def test_denesting():
 def test_number_of_bathrooms():
     data = {'bathroom_label':'42 baths and other bathing devices'}
     assert number_of_bathrooms(data) == 42
+    with pytest.warns(UserWarning):
+        assert number_of_bathrooms({'bathroom_label': '11 22 33'}) == 0
+    with pytest.warns(UserWarning):
+        assert number_of_bathrooms({'bathroom_label': 'has no numbers'}) == 0
+    with pytest.warns(UserWarning):
+        assert number_of_bathrooms({'no_bathroom_label': 'in_data'}) == 0

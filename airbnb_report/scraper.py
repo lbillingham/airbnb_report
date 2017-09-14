@@ -70,7 +70,14 @@ def nested_get(dict_, *nested_keys):
 
 def number_of_bathrooms(listing_data):
     label = 'bathroom_label'
-    numbers = [int(s) for s in listing_data[label].split() if s.isdigit()]
+    try:
+        numbers = [int(s) for s in listing_data[label].split() if s.isdigit()]
+    except KeyError:
+        numbers = []
+    if len(numbers) != 1:
+        mess = f'cannot parse "{label}" to find number of bathrooms'
+        warnings.warn(mess)
+        return 0
     return numbers[0]
 
 def scrape(url):
