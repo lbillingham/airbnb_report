@@ -54,6 +54,12 @@ def listing_info_tag(tags):
         raise ValueError(mess)
     return info
 
+
+def sanitize_for_json(_):
+    """eugh the tags text is in comment strings"""
+    pass
+
+
 def scrape(url):
     return url
 
