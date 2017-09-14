@@ -90,8 +90,13 @@ def amenities_list(listing_data):
     return amens
 
 
-def number_of_bedrooms(_):
-    pass
+def number_of_bedrooms(listing_data):
+    n_bedrooms_string = listing_data.get('bedrooms')
+    try:
+        n_bedrooms = int(n_bedrooms_string)
+    except (TypeError, ValueError):
+        n_bedrooms = 0
+    return n_bedrooms
 
 
 def scrape(url):
