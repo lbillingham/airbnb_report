@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import pytest
 
 
-from airbnb_report.scraper import airbnb_url_for
+from airbnb_report.scraper import airbnb_url_for, script_tags
 
 def _soupify(fake_page):
     """utility to make bs4 soup for test cases"""
