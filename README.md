@@ -4,11 +4,14 @@
 
 
 # Installation
+You'll need a python 3.6 interpreter in your path (I recommend a virtual environment).
 
+Then
 Simply run:
 
     $ pip install .
 
+We're using python 3.6 only as I want to use some new string interpolation features.
 
 # Usage
 
