@@ -100,7 +100,7 @@ def number_of_bedrooms(listing_data):
 
 
 def listing_name(listing_data):
-    pass
+    return listing_data.get('name') or 'UNKNOWN NAME'
 
 
 def scrape(url):
