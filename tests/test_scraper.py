@@ -87,5 +87,10 @@ def test_denesting():
     """
     im_nested = {'1st': {'2nd': {'3rd': 'level of nesting', 'superflous_key': 5}}}
     got_full = nested_get(im_nested, '1st', '2nd', '3rd')
-    assert got_full == {'3rd': 'level of nesting'}
-    assert len(got_full.keys()) == 1
+    assert got_full == 'level of nesting'
+
+    got_partial = nested_get(im_nested, '1st', '2nd')
+    assert got_partial == {'3rd': 'level of nesting', 'superflous_key': 5}
+
+    got_bad = nested_get(im_nested, '1st', '2nd', 'bad inner key')
+    assert got_bad == {}
