@@ -55,9 +55,9 @@ def listing_info_tag(tags):
     return info
 
 
-def sanitize_for_json(_):
+def sanitize_for_json(tag):
     """eugh the tags text is in comment strings"""
-    pass
+    return tag.text.replace('<!--', '').replace('-->', '')
 
 
 def scrape(url):
