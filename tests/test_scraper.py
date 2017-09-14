@@ -8,7 +8,7 @@ import pytest
 
 from airbnb_report.scraper import (
     amenities_list, airbnb_url_for, listing_info_tag,
-    nested_get, number_of_bathrooms,
+    nested_get, number_of_bathrooms, number_of_bedrooms,
     sanitize_for_json, script_tags,
 )
 
@@ -106,5 +106,10 @@ def test_number_of_bathrooms():
 
 
 def test_listing_amenities():
-    data = {'listing_amenities': {'name': 'a womble', 'is_present': True}}
+    data = {'listing_amenities': [{'name': 'a womble', 'is_present': True}]}
     assert amenities_list(data) == ['a womble']
+
+def test_number_of_bedrooms():
+    assert number_of_bedrooms({'bedrooms': 42}) == 42
+    assert number_of_bedrooms({'bedrooms': 'asdda'}) == 0
+    assert number_of_bedrooms({'notbedrooms': 2}) == 0

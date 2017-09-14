@@ -27,8 +27,9 @@ but that is likely to be more brittle.
 
 2. I'm writing tests 1st this, an personal preference, leads to lots of small
    functions. Each function owns its 'state' (e.g. the url template string).
-   This means lots of moving parts to mentally juggle, but _should_
-   be loosly coupled and therefore more flexible.
+   This means lots of moving parts to mentally juggle, and function-level
+   constants (magic strings) but _should_ be loosly coupled and
+   therefore more flexible. And should break more obviously and granularly.
 """
 import warnings
 
@@ -82,6 +83,14 @@ def number_of_bathrooms(listing_data):
 
 
 def amenities_list(listing_data):
+    amens = []
+    for amen in listing_data.get('listing_amenities'):
+        if amen.get('is_present'):
+            amens.append(amen.get('name'))
+    return amens
+
+
+def number_of_bedrooms(_):
     pass
 
 
