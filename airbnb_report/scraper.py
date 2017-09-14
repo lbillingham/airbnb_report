@@ -68,6 +68,8 @@ def nested_get(dict_, *nested_keys):
             return {}
     return dict_
 
+def number_of_bathrooms(_):
+    pass
 
 def scrape(url):
     return url

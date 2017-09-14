@@ -9,8 +9,8 @@ import pytest
 
 from airbnb_report.scraper import (
     airbnb_url_for, listing_info_tag,
-    nested_get,
-    sanitize_for_json, script_tags
+    nested_get, number_of_bathrooms,
+    sanitize_for_json, script_tags,
 )
 
 def _soupify(fake_page):
@@ -94,3 +94,7 @@ def test_denesting():
 
     got_bad = nested_get(im_nested, '1st', '2nd', 'bad inner key')
     assert got_bad == {}
+
+def test_number_of_bathrooms():
+    data = {'bathroom_label':'42 baths and other bathing devices'}
+    assert number_of_bathrooms(data) == 42
