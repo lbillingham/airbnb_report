@@ -19,6 +19,10 @@ To use it:
 
     $ airbnb_report --help
 
+or for the requested properties
+
+    $ airbnb_report --test_properties
+
 # Development
 
 Install in development mode
@@ -33,7 +37,10 @@ Run the tests and get a coverage report
 
     $ pytest --cov-report term-missing --cov airbnb_report
 
-Was created from my cookiecutter command line app template
+Unit tests are in `test_scraper.py` and there is a long-running,
+internet-hitting, borkable-by-external-data, system test in `test_system.py`
+
+Project was created from my cookiecutter command line app template
 
 ```shell
 cookiecutter https://github.com/lbillingham/cookiecutter-python-cli.git

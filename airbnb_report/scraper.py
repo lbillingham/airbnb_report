@@ -31,7 +31,8 @@ but that is likely to be more brittle.
 2. I'm writing tests 1st this, an personal preference, leads to lots of small
    functions. Each function owns its 'state' (e.g. the url template string).
    This means lots of moving parts to mentally juggle, and function-level
-   constants (magic strings) but _should_ be loosly coupled and
+   constants (magic strings), and slowness from lots of function calling...
+    but _should_ be loosly coupled and
    therefore more flexible. And should break more obviously and granularly.
 """
 from collections import namedtuple
