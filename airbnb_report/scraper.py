@@ -24,8 +24,12 @@ def airbnb_url_for(listing_number):
     return f'https://www.airbnb.co.uk/rooms/{listing_number}'
 
 def script_tags(soup):
+    """grab tags with json data from soupified page"""
     tags = soup.find_all('script', attrs={'type': 'application/json'})
     return tags
+
+def listing_info_tag(_):
+    pass
 
 def scrape(url):
     return url

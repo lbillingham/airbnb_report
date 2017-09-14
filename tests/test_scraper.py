@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import pytest
 
 
-from airbnb_report.scraper import airbnb_url_for, script_tags
+from airbnb_report.scraper import airbnb_url_for, listing_info_tag, script_tags
 
 def _soupify(fake_page):
     """utility to make bs4 soup for test cases"""
@@ -31,3 +31,12 @@ def test_getting_script_tags():
     tag = tags[0]
     assert 'Wanted tag' in tag.text
     assert 'Wrong' not in tag.text
+
+def test_getting_listing_info_tags():
+    golden = """\
+        <html>
+        <script type="application/json">{"listingInfo": "Wanted"}</script>
+        </html>"""
+    golden_tags = script_tags(_soupify(golden))
+    assert 'listingInfo' in listing_info_tag(golden_tags).text
+    assert 'Wanted' in listing_info_tag(golden_tags).text
