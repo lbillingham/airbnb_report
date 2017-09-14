@@ -60,8 +60,14 @@ def sanitize_for_json(tag):
     return tag.text.replace('<!--', '').replace('-->', '')
 
 
-def nested_get(*args):
-    pass
+def nested_get(dict_, *nested_keys):
+    for key in nested_keys:
+        try:
+            dict_ = dict_[key]
+        except KeyError:
+            return {}
+    return dict_
+
 
 def scrape(url):
     return url
