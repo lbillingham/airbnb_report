@@ -103,6 +103,9 @@ def listing_name(listing_data):
     return listing_data.get('name') or 'UNKNOWN NAME'
 
 
+def property_type(listing_data):
+    return listing_data.get('room_and_property_type') or 'UNKNOWN TYPE'
+
 def scrape(url):
     return url
 
