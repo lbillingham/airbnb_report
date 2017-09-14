@@ -2,6 +2,8 @@ import sys
 
 import click
 
+from .scraper import results_for
+
 _ASKED_FOR_LISTINGS = [14531512, 19278160, 19292873]
 
 def check_python_version():
@@ -27,4 +29,8 @@ def main(listing_number, test_properties):
         properties.append(listing_number)
     if test_properties:
         properties += _ASKED_FOR_LISTINGS
-    click.echo(properties)
+    results = results_for(properties)
+    for prop, result in zip(properties, results):
+        click.echo(f'Results for property number {prop}:')
+        click.echo(result)
+        click.echo()
