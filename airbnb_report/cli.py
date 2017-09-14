@@ -2,7 +2,7 @@ import sys
 
 import click
 
-from .scraper import results_for
+from airbnb_report.scraper import results_for
 
 _ASKED_FOR_LISTINGS = [14531512, 19278160, 19292873]
 
