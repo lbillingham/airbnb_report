@@ -80,6 +80,11 @@ def number_of_bathrooms(listing_data):
         return 0
     return numbers[0]
 
+
+def amenities_list(listing_data):
+    pass
+
+
 def scrape(url):
     return url
 
