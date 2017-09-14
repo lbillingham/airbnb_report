@@ -6,7 +6,6 @@ from io import StringIO
 from bs4 import BeautifulSoup
 import pytest
 
-
 from airbnb_report.scraper import (
     airbnb_url_for, listing_info_tag,
     nested_get, number_of_bathrooms,

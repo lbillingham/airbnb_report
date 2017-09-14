@@ -68,8 +68,10 @@ def nested_get(dict_, *nested_keys):
             return {}
     return dict_
 
-def number_of_bathrooms(_):
-    pass
+def number_of_bathrooms(listing_data):
+    label = 'bathroom_label'
+    numbers = [int(s) for s in listing_data[label].split() if s.isdigit()]
+    return numbers[0]
 
 def scrape(url):
     return url
