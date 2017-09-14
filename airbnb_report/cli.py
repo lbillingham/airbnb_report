@@ -1,12 +1,30 @@
+import sys
+
 import click
 
+_ASKED_FOR_LISTINGS = [14531512, 19278160, 19292873]
+
+def check_python_version():
+    if sys.version_info < (3, 6):
+        mess = 'we require python 3.6 or greater (I wanted to use f-strings (PEP 498))'
+        raise click.UsageError(mess)
 
 @click.command()
-@click.option('--as-cowboy', '-c', is_flag=True, help='Greet as a cowboy.')
-@click.argument('name', default='world', required=False, metavar='<name>')
-def main(name, as_cowboy):
+@click.option('--test_properties', '-t', is_flag=True, help='Run for the 3 specified test properties.')
+@click.argument('listing_number', default=None, required=False, type=int, metavar='<listing_number>')
+def main(listing_number, test_properties):
     """
-     Airb                                                                                                                                  nb report scrapes listing data from Airbnb property pages
+     Airbnb report scrapes listing data from Airbnb property pages.
+     Specify a property using its <listing number>.
+
+     These are part of the property's URL: e.g. the
+     <listing_number> for https://www.airbnb.co.uk/rooms/14531512
+     is 14531512
     """
-    greet = 'Howdy' if as_cowboy else 'Hello'
-    click.echo('{0}, {1}.'.format(greet, name))
+    check_python_version()
+    properties = []
+    if listing_number:
+        properties.append(listing_number)
+    if test_properties:
+        properties += _ASKED_FOR_LISTINGS
+    click.echo(properties)

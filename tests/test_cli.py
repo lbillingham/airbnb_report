@@ -12,18 +12,23 @@ def test_cli(runner):
     result = runner.invoke(cli.main)
     assert result.exit_code == 0
     assert not result.exception
-    assert result.output.strip() == 'Hello, world.'
+    assert result.output.strip() == '[]'
 
 
 def test_cli_with_option(runner):
-    result = runner.invoke(cli.main, ['--as-cowboy'])
+    result = runner.invoke(cli.main, ['--test_properties'])
     assert not result.exception
     assert result.exit_code == 0
-    assert result.output.strip() == 'Howdy, world.'
+    assert result.output.strip() == '[14531512, 19278160, 19292873]'
 
 
 def test_cli_with_arg(runner):
-    result = runner.invoke(cli.main, ['Laurence'])
+    result = runner.invoke(cli.main, ['42'])
     assert result.exit_code == 0
     assert not result.exception
-    assert result.output.strip() == 'Hello, Laurence.'
+    assert result.output.strip() == '[42]'
+
+
+def test_cli_with_arg_and_option(runner):
+    result = runner.invoke(cli.main, ['--test_properties', '99'])
+    assert result.output.strip('[99, 14531512, 19278160, 19292873]')
