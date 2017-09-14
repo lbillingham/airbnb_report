@@ -60,6 +60,9 @@ def sanitize_for_json(tag):
     return tag.text.replace('<!--', '').replace('-->', '')
 
 
+def nested_get(*args):
+    pass
+
 def scrape(url):
     return url
 

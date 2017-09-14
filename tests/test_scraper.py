@@ -8,7 +8,9 @@ import pytest
 
 
 from airbnb_report.scraper import (
-    airbnb_url_for, listing_info_tag, sanitize_for_json, script_tags
+    airbnb_url_for, listing_info_tag,
+    nested_get,
+    sanitize_for_json, script_tags
 )
 
 def _soupify(fake_page):
@@ -77,3 +79,13 @@ def test_sanitise_for_json():
         text = '<!--We want this middle bit-->'
     got = sanitize_for_json(FakeTag())
     assert got == 'We want this middle bit'
+
+def test_denesting():
+    """
+    JSON data comes back as nested dicts
+    can we get it out?
+    """
+    im_nested = {'1st': {'2nd': {'3rd': 'level of nesting', 'superflous_key': 5}}}
+    got_full = nested_get(im_nested, '1st', '2nd', '3rd')
+    assert got_full == {'3rd': 'level of nesting'}
+    assert len(got_full.keys()) == 1
