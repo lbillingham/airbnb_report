@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 import pytest
 
 from airbnb_report.scraper import (
-    amenities_list, airbnb_url_for, listing_info_tag,
+    amenities_list, airbnb_url_for, listing_info_tag, listing_name,
     nested_get, number_of_bathrooms, number_of_bedrooms,
     sanitize_for_json, script_tags,
 )
@@ -113,3 +113,7 @@ def test_number_of_bedrooms():
     assert number_of_bedrooms({'bedrooms': 42}) == 42
     assert number_of_bedrooms({'bedrooms': 'asdda'}) == 0
     assert number_of_bedrooms({'notbedrooms': 2}) == 0
+
+def test_listing_name():
+    assert listing_name({'name': 'Edinburgh Castle'}) == 'Edinburgh Castle'
+    assert listing_name({'no name key': 2}) == 'UNKNOWN NAME'

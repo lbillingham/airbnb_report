@@ -99,6 +99,10 @@ def number_of_bedrooms(listing_data):
     return n_bedrooms
 
 
+def listing_name(listing_data):
+    pass
+
+
 def scrape(url):
     return url
 
