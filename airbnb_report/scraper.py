@@ -5,7 +5,10 @@ Scrape Airbnb property listings for
 - property type (e.g Apartment)
 - number of bedrooms
 - number of bathrooms
--  list of the amenities
+- list of the amenities
+
+the main 'API' is the `scrape` function which takes a URL and
+returns the results above as a named tuple.
 
 We do this by grabbing JSON from the page.
 Could potentially also do via the human readable rendered HTML
@@ -31,9 +34,21 @@ but that is likely to be more brittle.
    constants (magic strings) but _should_ be loosly coupled and
    therefore more flexible. And should break more obviously and granularly.
 """
+from collections import namedtuple
+import json
 import warnings
 
 from bs4 import BeautifulSoup
+from requests import get
+
+Results = namedtuple('Results', ['listing_name', 'bedrooms', 'bathrooms', 'property_type', 'amenities_list'])
+
+
+def page_soup(page_url):
+    response = get(page_url)
+    page_text = response.content.decode(response.encoding)
+    soup = BeautifulSoup(page_text, 'lxml')
+    return soup
 
 def airbnb_url_for(listing_number):
     return f'https://www.airbnb.co.uk/rooms/{listing_number}'
@@ -106,8 +121,35 @@ def listing_name(listing_data):
 def property_type(listing_data):
     return listing_data.get('room_and_property_type') or 'UNKNOWN TYPE'
 
+
+def listing_data(soup):
+    """
+    extract dictionary of listing data from page soup
+    """
+    listing_data_keys = ['bootstrapData', 'reduxData', 'marketplacePdp', 'listingInfo', 'listing']
+    tags = script_tags(soup)
+    listing_tag = listing_info_tag(tags)
+    json_payload = sanitize_for_json(listing_tag)
+    json_data = json.loads(json_payload)
+    data = nested_get(json_data, *listing_data_keys)
+    return data
+
+
+def populate_results(listing_data):
+    return Results(
+        bedrooms=number_of_bedrooms(listing_data),
+        bathrooms=number_of_bathrooms(listing_data),
+        listing_name=listing_name(listing_data),
+        property_type=property_type(listing_data),
+        amenities_list=amenities_list(listing_data)
+    )
+
+
 def scrape(url):
-    return url
+    soup = page_soup(url)
+    data = listing_data(soup)
+    results = populate_results(data)
+    return results
 
 
 def results_for(properties):
@@ -117,7 +159,5 @@ def results_for(properties):
     property numbers
     """
     urls = (airbnb_url_for(num) for num in properties)
-    results = (scrape(url) for url in urls)
+    results = [scrape(url) for url in urls]
     return results
-
-

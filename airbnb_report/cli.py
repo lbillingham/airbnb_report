@@ -31,6 +31,7 @@ def main(listing_number, test_properties):
         properties += _ASKED_FOR_LISTINGS
     results = results_for(properties)
     for prop, result in zip(properties, results):
-        click.echo(f'Results for property number {prop}:')
-        click.echo(result)
+        click.echo(f'### Results for property number {result.listing_name} (number: {prop}):')
+        for key, val in result._asdict().items():
+            click.echo(f' - {key}: {val}')
         click.echo()

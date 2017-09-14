@@ -8,6 +8,7 @@ import pytest
 
 from airbnb_report.scraper import (
     amenities_list, airbnb_url_for, listing_info_tag, listing_name,
+    listing_data,
     nested_get, number_of_bathrooms, number_of_bedrooms,
     property_type, sanitize_for_json, script_tags,
 )
@@ -122,3 +123,18 @@ def test_property_type():
     type_ = 'Entire womble warren'
     assert property_type({'room_and_property_type': type_}) == type_
     assert property_type({}) == 'UNKNOWN TYPE'
+
+
+def test_get_listing_data_from_soup():
+    fake_page = r"""\
+        <html>
+        <p>Not a script tag</p>
+        <script type="application/json">
+            <!--
+                {"bootstrapData": {"reduxData": {"marketplacePdp": {"listingInfo": {"listing": {"our_data": "is here"}}}}}}
+            -->
+        </script>
+        <script type="text/javascript">Wrong type of script</script>
+        </html>"""
+    soup = _soupify(fake_page)
+    assert listing_data(soup) == {'our_data': 'is here'}
