@@ -153,12 +153,14 @@ def scrape(url):
     return results
 
 
-def results_for(properties):
+def results_for(property_numbers):
     """
-    Print results of scraping for each property.
-    `properties` is an iterable of airbnb
+    Yield the scraping results for each
+    property in `property_numbers`;
+    which is an iterable of airbnb
     property numbers
     """
-    urls = (airbnb_url_for(num) for num in properties)
-    results = [scrape(url) for url in urls]
-    return results
+    for property_num in property_numbers:
+        url = airbnb_url_for(property_num)
+        results = scrape(url)
+        yield results
